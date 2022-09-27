@@ -1,9 +1,9 @@
 var colors = ["b", "r", "y", "g", "c", "w"];
-main() {
+function main() {
     createAnswer();
 }
 
-createAnswer() {
+function createAnswer() {
     var answer = [];
     let position = [];
     for (let i = 0; i <= 4; i++) {
