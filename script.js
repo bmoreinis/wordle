@@ -1,4 +1,4 @@
-colors["b", "r", "y", "g", "c", "w"];
+var colors = ["b", "r", "y", "g", "c", "w"];
 main() {
     createAnswer();
 }
