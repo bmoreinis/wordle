@@ -4,11 +4,44 @@ var cloneAnswer = [];
 var guessArray = [];
 var blackTokens = 0;
 var whiteTokens = 0;
+var guessTranscript = [];
 var guessRecord = [];
 
 //Play Button:
 function main() {
   createAnswer();
+}
+
+//Enter Button:
+function enterInput() {
+  let turnCount = 0;
+  turnCount++;
+  console.log("Turn count: "+turnCount);
+  guessInput();
+  console.log(cloneGuess); //why does alert work, but log returns a null value?
+  giveFeedback();
+  if (blackTokens == 4) {
+    alert("You Won in "+ turnCount +" turns!");
+  }
+  else alert("Black Tokens: " + blackTokens + "\nWhite Tokens: " + whiteTokens);
+  makeGuessRecord();
+  blackTokens = 0;
+  whiteTokens = 0;
+}
+
+function makeGuessRecord() {
+  //guessTranscript defined in guessInput()
+  guessTranscript.push("   ");
+  guessTranscript.push(blackTokens);
+  guessTranscript.push(whiteTokens);
+  guessTranscript.push("\n");
+  guessRecord.push(guessTranscript);
+  alert(JSON.stringify(guessRecord));
+  //do stringify first, and then insert white space and \n with for loop
+  for (i = 1; i <= guessRecord.length; i++) {
+    let guessLog = guessRecord;
+    JSON.stringify(guessLog);
+  }
 }
 
 function createAnswer() {
@@ -26,8 +59,8 @@ function guessInput() {
     let input = document.getElementById("guess" + i);
     guessArray.push(parseInt(input.value));
   }
-  guessRecord.push(guessArray);
   cloneGuess = guessArray.slice();
+  guessTranscript = guessArray.slice();
 }
 
 function giveFeedback() {
@@ -70,22 +103,4 @@ function whiteCheck() {
       }
     }//checks if guess array current index is a null value (from black token check)
   }//iterate through each position of guessArray
-}
-
-var turnCount = 0;
-
-//Enter Button:
-function enterInput() {
-  turnCount++;
-  console.log("Turn count: "+turnCount);
-  guessInput();
-  console.log(cloneGuess); //why does alert work, but log returns a null value?
-  blackTokens = 0;
-  whiteTokens = 0;
-  //alert(JSON.stringify(guessRecord));
-  giveFeedback();
-  if (blackTokens == 4) {
-    alert("You Won in "+ turnCount +" turns!");
-  }
-  else alert("Black Tokens: " + blackTokens + "\nWhite Tokens: " + whiteTokens);
 }
