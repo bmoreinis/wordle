@@ -7,10 +7,6 @@ var whiteTokens = 0;
 var guessTranscript = [];
 var guessRecord = [];
 
-//Play Button:
-function main() {
-  createAnswer();
-}
 
 //Enter Button:
 function enterInput() {
@@ -43,6 +39,8 @@ function makeGuessRecord() {
     JSON.stringify(guessLog);
   }
 }
+
+//Play Button:
 
 function createAnswer() {
   for (let i = 0; i <= 3; i++) {
