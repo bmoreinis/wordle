@@ -2,34 +2,32 @@ var colors = ["b", "r", "y", "g", "c", "w"];
 var answer = [];
 var cloneAnswer = [];
 var guessArray = [];
-var blackTokens = 0;
-var whiteTokens = 0;
+var feedback = [];
 var guessTranscript = [];
 var guessRecord = [];
+var turnCount = 0;
 
 
 //Enter Button:
 function enterInput() {
-  let turnCount = 0;
   turnCount++;
   console.log("Turn count: "+turnCount);
   guessInput();
   console.log(cloneGuess); //why does alert work, but log returns a null value?
   giveFeedback();
-  if (blackTokens == 4) {
+  feedback.push("Turns: "+turnCount);
+  if (feedback[3] == "b") {
     alert("You Won in "+ turnCount +" turns!");
   }
-  else alert("Black Tokens: " + blackTokens + "\nWhite Tokens: " + whiteTokens);
+  else alert("Feedback: "+(JSON.stringify(feedback)));
   makeGuessRecord();
-  blackTokens = 0;
-  whiteTokens = 0;
+  feedback = [];
 }
 
 function makeGuessRecord() {
   //guessTranscript defined in guessInput()
   guessTranscript.push("   ");
-  guessTranscript.push(blackTokens);
-  guessTranscript.push(whiteTokens);
+  guessTranscript.push(feedback);
   guessTranscript.push("\n");
   guessRecord.push(guessTranscript);
   alert(JSON.stringify(guessRecord));
@@ -63,19 +61,17 @@ function guessInput() {
 
 function giveFeedback() {
   cloneAnswer = answer.slice();
-  blackTokens = 0;
-  whiteTokens = 0;
+  feedback = [];
   blackCheck();
   whiteCheck();
-  console.log("black tokens: " + blackTokens);
-  console.log("white tokens: " + whiteTokens);
+  console.log("feedback: " + feedback);
 }
 
 //Checks if the indices of both the current selection in the guessArray and cloneAnswer are equal
 function blackCheck() {
   for (let i = 0; i <= 3; i++) {
     if (guessArray[i] == cloneAnswer[i]) {
-      blackTokens++;
+      feedback.push("b");
       cloneAnswer[i] = null;
       guessArray[i] = null;
     }
@@ -91,7 +87,7 @@ function whiteCheck() {
           for (let answerPos = 0; answerPos <= 3; answerPos++) {
             if (guessArray[guessPos] == cloneAnswer[answerPos]) {
               if (guessPos != answerPos) {
-                whiteTokens++;
+                feedback.push("w");
                 guessArray[guessPos] = null;
                 cloneAnswer[answerPos] = null;
                 break;
