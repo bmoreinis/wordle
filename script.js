@@ -33,7 +33,8 @@ function makeGuessRecord(guessArray, feedback) {
   //guessTranscript defined in guessInput()
   // guessTranscript.push("   ");
   let guessTranscript = [];
-  guessTranscript.push(guessArray);
+  let colorGuess = convertGuess(guessArray);
+  guessTranscript.push(colorGuess);
   guessTranscript.push(feedback);
   // guessTranscript.push("\n");
   guessRecord.push(guessTranscript);
@@ -42,11 +43,22 @@ function makeGuessRecord(guessArray, feedback) {
   //do stringify first, and then insert white space and \n with for loop
 }
 
+function convertGuess(guessArray) {
+  let colorGuess  = guessArray.slice();
+  for (let i = 0; i < colorGuess.length; i++) {
+    for (let guessPos = 0; guessPos <= colors.length; guessPos++ ) {
+      if (colorGuess[i] == guessPos) {
+        colorGuess[i] = colors[guessPos];
+      }
+    }
+  }
+  return colorGuess;
+}
+
 function displayGuessRecord() {
   let feedbackBody = document.createElement("p"); 
   for (let i = 0; i < guessRecord.length; i++) {
-    let test = guessRecord[i];
-    feedbackBody.innerHTML = test;
+    feedbackBody.innerHTML = guessRecord[i];
     document.getElementById("feedbackDiv").appendChild(feedbackBody);
   }
 }
@@ -90,7 +102,7 @@ function blackCheck(guessClone) {
   let answerClone = answer.slice();
   for (let i = 0; i <= 3; i++) {
     if (guessClone[i] == answerClone[i]) {
-      feedback.push("b");
+      feedback.push("B");
       answerClone[i] = null;
       guessClone[i] = null;
     }
@@ -114,7 +126,7 @@ function whiteCheck(tempTranscript) {
           for (let answerPos = 0; answerPos <= 3; answerPos++) {
             if (guessArray[guessPos] == answerClone[answerPos]) {
               if (guessPos != answerPos) {
-                feedback.push("w");
+                feedback.push("W");
                 guessArray[guessPos] = null;
                 answerClone[answerPos] = null;
                 break;
