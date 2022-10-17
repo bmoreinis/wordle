@@ -21,46 +21,80 @@ function enterInput() {
   console.log(JSON.stringify(guessClone)); //why does alert work, but log returns a null value?
   let feedback = giveFeedback(guessClone); // calls function and receives array @mbm
   // feedback.push("Turns: "+turnCount); @removed per refactoring
-  if (feedback[3] == "b") {
+  if (feedback[3] == "B") {
     alert("You Won in " + turnCount + " turns!");
   }
   else alert("Guess: " + (JSON.stringify(guessArray)) + "Feedback: " + (JSON.stringify(feedback)));
-  makeGuessRecord(guessArray, feedback);
-  displayGuessRecord();
+  //makeGuessRecord(guessArray, feedback);
+  let colorGuess = makeGuessRecord(guessArray, feedback);
+  displayGuessRecord(colorGuess, feedback);
 }
 
 function makeGuessRecord(guessArray, feedback) {
   //guessTranscript defined in guessInput()
-  // guessTranscript.push("   ");
   let guessTranscript = [];
   let colorGuess = convertGuess(guessArray);
   guessTranscript.push(colorGuess);
   guessTranscript.push(feedback);
-  // guessTranscript.push("\n");
   guessRecord.push(guessTranscript);
   console.log("Guess Record: "+JSON.stringify(guessRecord));
-  //alert(JSON.stringify(guessRecord)); //made redundant by displayGuessRecord() @kl
-  //do stringify first, and then insert white space and \n with for loop
+  return colorGuess;
 }
 
 function convertGuess(guessArray) {
-  let colorGuess  = guessArray.slice();
+  /*let colorGuess  = guessArray.slice();
   for (let i = 0; i < colorGuess.length; i++) {
     for (let guessPos = 0; guessPos <= colors.length; guessPos++ ) {
+      colorGuess[i] = colors.indexOf(guessArray[i]);
       if (colorGuess[i] == guessPos) {
         colorGuess[i] = colors[guessPos];
       }
     }
   }
+  return colorGuess;                               <--                          old code @kl */
+  let colorGuess  = [];
+  for (let i = 0; i < 4; i++) {
+    colorGuess.push(colors[guessArray[i]]);
+  }
   return colorGuess;
 }
-
-function displayGuessRecord() {
-  let feedbackBody = document.createElement("p"); 
-  for (let i = 0; i < guessRecord.length; i++) {
-    feedbackBody.innerHTML = guessRecord[i];
-    document.getElementById("feedbackDiv").appendChild(feedbackBody);
+//ol -> li for each turn -> ul for guess array + ul for feedback; ul guessArray -> li for each color; ul feedback -> li for each token 
+function displayGuessRecord(colorGuess, feedback) {
+  let turnMain = document.createElement("li");
+  let turnGuess = document.createElement("ul")//style("none"); <-- work on this later
+  //let turnFeedback = document.createElement("ul").style.listStyleType("none");
+  //let turnFeedbackColor = document.createElement("li");  
+  for (let i = 0; i < 4; i++) {
+    let turnGuessColor = document.createElement("li");
+    turnGuessColor.innerHTML = colorGuess[i]; 
+    turnGuess.appendChild(turnGuessColor);
   }
+
+
+
+  //work on below:
+
+  
+  /*for (let i = 0; i < 4; i++) {
+    let turnGuessColor = document.createElement("li");
+    turnGuessColor.innerHTML = colorGuess[i]; 
+    turnGuess.appendChild(turnGuessColor);
+  }*/
+
+
+
+
+
+  
+  turnMain.appendChild(turnGuess);
+  //turnMain.appendChild(turnFeedback);
+  document.getElementById("feedbackOL").appendChild(turnMain);
+  //                                              <--                       work on this code @kl 
+  /*let turnMain = document.createElement("li");
+  for (let i = 0; i < guessRecord.length; i++) {
+    turnMain.innerHTML = guessRecord[i];
+    document.getElementById("feedbackOL").appendChild(turnMain);
+  }                                                *///                          old/stub code - @kl 
 }
 
 //Play Button:
