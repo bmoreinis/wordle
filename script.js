@@ -1,4 +1,4 @@
-var colors = ["b", "r", "y", "g", "c", "w"];
+var colors = ["r", "o", "y", "g", "c", "v"];
 var answer = [];
 var guessRecord = [];
 var turnCount = 0;
@@ -21,7 +21,7 @@ function enterInput() {
   console.log(JSON.stringify(guessClone)); //why does alert work, but log returns a null value?
   let feedback = giveFeedback(guessClone); // calls function and receives array @mbm
   // feedback.push("Turns: "+turnCount); @removed per refactoring
-  if (feedback[3] == "B") {
+  if (feedback[3] == "b") {
     alert("You Won in " + turnCount + " turns!");
   }
   else alert("Guess: " + (JSON.stringify(guessArray)) + "Feedback: " + (JSON.stringify(feedback)));
@@ -61,33 +61,21 @@ function convertGuess(guessArray) {
 //ol -> li for each turn -> ul for guess array + ul for feedback; ul guessArray -> li for each color; ul feedback -> li for each token 
 function displayGuessRecord(colorGuess, feedback) {
   let turnMain = document.createElement("li");
-  let turnGuess = document.createElement("ul")//style("none"); <-- work on this later
-  //let turnFeedback = document.createElement("ul").style.listStyleType("none");
-  //let turnFeedbackColor = document.createElement("li");  
+  let turnGuess = document.createElement("ul");//style("none"); <-- work on this later
+  let turnFeedback = document.createElement("ul");//.style.listStyleType("none");
   for (let i = 0; i < 4; i++) {
     let turnGuessColor = document.createElement("li");
-    turnGuessColor.innerHTML = colorGuess[i]; 
+    //turnGuessColor.innerHTML = colorGuess[i]; 
+    turnGuessColor.classList.add(colorGuess[i]);
     turnGuess.appendChild(turnGuessColor);
-  }
-
-
-
-  //work on below:
-
-  
-  /*for (let i = 0; i < 4; i++) {
-    let turnGuessColor = document.createElement("li");
-    turnGuessColor.innerHTML = colorGuess[i]; 
-    turnGuess.appendChild(turnGuessColor);
-  }*/
-
-
-
-
-
-  
+  }  
+  for (let i = 0; i < feedback.length; i++) {
+    let turnFeedbackColor = document.createElement("li");
+    //turnFeedbackColor.innerHTML = feedback[i]; 
+    turnFeedback.appendChild(turnFeedbackColor);
+  }  
   turnMain.appendChild(turnGuess);
-  //turnMain.appendChild(turnFeedback);
+  turnMain.appendChild(turnFeedback);
   document.getElementById("feedbackOL").appendChild(turnMain);
   //                                              <--                       work on this code @kl 
   /*let turnMain = document.createElement("li");
@@ -136,7 +124,7 @@ function blackCheck(guessClone) {
   let answerClone = answer.slice();
   for (let i = 0; i <= 3; i++) {
     if (guessClone[i] == answerClone[i]) {
-      feedback.push("B");
+      feedback.push("b");
       answerClone[i] = null;
       guessClone[i] = null;
     }
@@ -160,7 +148,7 @@ function whiteCheck(tempTranscript) {
           for (let answerPos = 0; answerPos <= 3; answerPos++) {
             if (guessArray[guessPos] == answerClone[answerPos]) {
               if (guessPos != answerPos) {
-                feedback.push("W");
+                feedback.push("w");
                 guessArray[guessPos] = null;
                 answerClone[answerPos] = null;
                 break;

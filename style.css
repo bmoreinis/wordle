@@ -2,3 +2,40 @@ html, body {
   height: 100%;
   width: 100%;
 }
+
+.r {
+  background-color: red;
+}
+.o {
+  background-color: orange;
+}
+.y {
+  background-color: gold;
+}
+.g {
+  background-color: green;
+}
+.c {
+  background-color: cyan;
+}
+.v {
+  background-color: violet;
+}
+
+ul {
+  float: left;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  float: left;
+}
+
+ol li ul li {
+  display: block;
+  padding: 16px;
+  border: 1px solid black;
+  text-decoration: none;
+}
