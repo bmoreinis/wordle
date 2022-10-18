@@ -72,6 +72,7 @@ function displayGuessRecord(colorGuess, feedback) {
   for (let i = 0; i < feedback.length; i++) {
     let turnFeedbackColor = document.createElement("li");
     //turnFeedbackColor.innerHTML = feedback[i]; 
+    turnFeedbackColor.classList.add(feedback[i]);
     turnFeedback.appendChild(turnFeedbackColor);
   }  
   turnMain.appendChild(turnGuess);
