@@ -1,6 +1,54 @@
 html, body {
   height: 100%;
   width: 100%;
+  background-color: #101010;
+}
+
+#main {
+  width: 600px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 25px;
+  background-color: #303030;
+}
+
+#title {
+  width: 600px;
+  text-align: center;
+  height: auto;
+  color: #e6ffff;
+}
+
+#instructions {
+  height: 37.5px;
+}
+
+button {
+  width: 600px;
+  height: 75px;
+  border-radius: 25px;
+  background-color: #e6ffff;
+}
+
+select {
+  float: left;
+  width: 75px;
+  height: 100%;
+  border-radius: 10px;
+  background-color: #e6ffff;
+}
+
+#selectors {
+  float: left;
+  width: 600px;
+  height: 75px;
+}
+
+#score {
+  float: left;
+  width: 225px;
+  margin-left: 75px;
+  background-color: #e6ffff;
 }
 
 .r {
@@ -23,26 +71,38 @@ html, body {
 }
 
 .b {
-  background-color: black;
+  background-color: #303030;
 }
 .w {
   background-color: white;
 }
 
+ol {
+  list-style-type: none;
+  float: left;
+  padding: 0px;
+  margin-left: 0px;
+}
+
 ul {
   float: left;
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
 }
 
 li {
   float: left;
+  padding: 0px;
+  margin-left: 0px;
 }
 
 ol li ul li {
   display: block;
-  padding: 16px;
-  border: 1px solid black;
+  list-style-type: none;
+  padding: 36.5px;
+  margin-left: 0px;
+  border-radius: 10px;
+  border: 1px solid	black;
   text-decoration: none;
 }
