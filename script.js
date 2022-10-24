@@ -165,3 +165,24 @@ function whiteCheck(tempTranscript) {
   }//iterate through each position of guessArray
   return feedback; // we don't need answerClone anymore @mbm
 }
+
+function selectColor() {
+  //console.log("hi");
+  let guessArray = [];
+  for (let i = 1; i <= 4; i++) {
+    let input = document.getElementById("guess" + i);
+    guessArray.push(parseInt(input.value));
+  }
+  console.log(guessArray);
+  let colorGuess  = [];
+  for (let i = 0; i < 4; i++) {
+    colorGuess.push(colors[guessArray[i]]);
+  }
+  console.log(colorGuess);
+  let guessI = 1;
+  for (let i = 0; i < 4; i++) {
+    document.getElementById("guess"+guessI).classList.add(colorGuess[i]);
+    console.log(colorGuess[i])
+    guessI++;
+  }
+}
