@@ -15,7 +15,7 @@
     <h1 id="title"> Mastermind</h1>
     <button id="instructions" onclick="instructions()">Instructions</button>
     <div onchange="selectColor()" id="selectors">
-      <select name="guess1" id="guess1">
+      <select name="guess1" id="guess1" class="r">
         <option value="0">R</option>
         <option value="1">O</option>
         <option value="2">Y</option>
@@ -23,7 +23,7 @@
         <option value="4">C</option>
         <option value="5">V</option>
       </select>
-      <select name="guess2" id="guess2">
+      <select name="guess2" id="guess2" class="r">
         <option value="0">R</option>
         <option value="1">O</option>
         <option value="2">Y</option>
@@ -31,7 +31,7 @@
         <option value="4">C</option>
         <option value="5">V</option>
       </select>
-      <select name="guess3" id="guess3">
+      <select name="guess3" id="guess3" class="r">
         <option value="0">R</option>
         <option value="1">O</option>
         <option value="2">Y</option>
@@ -39,7 +39,7 @@
         <option value="4">C</option>
         <option value="5">V</option>
       </select>
-      <select name="guess4" id="guess4">
+      <select name="guess4" id="guess4" class="r">
         <option value="0">R</option>
         <option value="1">O</option>
         <option value="2">Y</option>
@@ -47,9 +47,9 @@
         <option value="4">C</option>
         <option value="5">V</option>
       </select>
+      <button onclick="enterInput()" id="play">Play Turn</button>
       <button id="score"> High Score: <br></button>
     </div>
-    <button onclick="enterInput()">Play Turn</button>
     <ol id="feedbackOL"></ol>
   </div>
 

@@ -23,11 +23,18 @@ function enterInput() {
   // feedback.push("Turns: "+turnCount); @removed per refactoring
   if (feedback[3] == "b") {
     alert("You Won in " + turnCount + " turns!");
+    clear();
   }
   //else alert("Guess: " + (JSON.stringify(guessArray)) + "Feedback: " + (JSON.stringify(feedback))); -obsolete @kl
   //makeGuessRecord(guessArray, feedback);
   let colorGuess = makeGuessRecord(guessArray, feedback);
   displayGuessRecord(colorGuess, feedback);
+}
+
+function clear() {
+  guessRecord = [];
+  turnCount = 0;
+  createAnswer();
 }
 
 function makeGuessRecord(guessArray, feedback) {
@@ -61,29 +68,24 @@ function convertGuess(guessArray) {
 //ol -> li for each turn -> ul for guess array + ul for feedback; ul guessArray -> li for each color; ul feedback -> li for each token 
 function displayGuessRecord(colorGuess, feedback) {
   let turnMain = document.createElement("li");
-  let turnGuess = document.createElement("ul");//style("none"); <-- work on this later
-  let turnFeedback = document.createElement("ul");//.style.listStyleType("none");
+  turnMain.style.width = "625px";
+  let turnGuess = document.createElement("ul");
+  let turnFeedback = document.createElement("ul");
+  turnFeedback.style.float = "right";
+  turnFeedback.style.marginLeft = "25px";
   for (let i = 0; i < 4; i++) {
     let turnGuessColor = document.createElement("li");
-    //turnGuessColor.innerHTML = colorGuess[i]; 
     turnGuessColor.classList.add(colorGuess[i]);
     turnGuess.appendChild(turnGuessColor);
   }  
   for (let i = 0; i < feedback.length; i++) {
     let turnFeedbackColor = document.createElement("li");
-    //turnFeedbackColor.innerHTML = feedback[i]; 
     turnFeedbackColor.classList.add(feedback[i]);
     turnFeedback.appendChild(turnFeedbackColor);
   }  
   turnMain.appendChild(turnGuess);
   turnMain.appendChild(turnFeedback);
   document.getElementById("feedbackOL").appendChild(turnMain);
-  //                                              <--                       work on this code @kl 
-  /*let turnMain = document.createElement("li");
-  for (let i = 0; i < guessRecord.length; i++) {
-    turnMain.innerHTML = guessRecord[i];
-    document.getElementById("feedbackOL").appendChild(turnMain);
-  }                                                *///                          old/stub code - @kl 
 }
 
 function instructions() {
@@ -173,16 +175,17 @@ function selectColor() {
     let input = document.getElementById("guess" + i);
     guessArray.push(parseInt(input.value));
   }
-  console.log(guessArray);
+  //console.log(guessArray);
   let colorGuess  = [];
   for (let i = 0; i < 4; i++) {
     colorGuess.push(colors[guessArray[i]]);
   }
-  console.log(colorGuess);
+  //console.log(colorGuess);
   let guessI = 1;
   for (let i = 0; i < 4; i++) {
+    document.getElementById("guess"+guessI).setAttribute("class", "");
     document.getElementById("guess"+guessI).classList.add(colorGuess[i]);
-    console.log(colorGuess[i])
+    //console.log(colorGuess[i])
     guessI++;
   }
 }

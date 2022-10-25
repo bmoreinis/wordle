@@ -4,8 +4,19 @@ html, body {
   background-color: #101010;
 }
 
+button#play {
+  width: 75px;
+  border-radius: 50px;
+  margin-left: 25px;
+}
+
+button:hover {
+  background-color:  #baffff;
+}
+
 #main {
-  width: 600px;
+  width: 625px;
+  height: 200px;
   margin: auto;
   padding: 25px;
   border-radius: 25px;
@@ -13,7 +24,7 @@ html, body {
 }
 
 #title {
-  width: 600px;
+  width: 625px;
   text-align: center;
   height: auto;
   color: #e6ffff;
@@ -24,7 +35,7 @@ html, body {
 }
 
 button {
-  width: 600px;
+  width: 625px;
   height: 75px;
   border-radius: 25px;
   background-color: #e6ffff;
@@ -35,21 +46,21 @@ select {
   width: 75px;
   height: 100%;
   border-radius: 10px;
+  border-color: #303030;
   background-color: #e6ffff;
 }
 
 #selectors {
   float: left;
-  width: 600px;
+  width: 625px;
   height: 75px;
 }
 
 #score {
-  float: left;
-  width: 225px;
-  margin-left: 75px;
-  background-color: #e6ffff;
+  float: right;
+  width: 200px;
 }
+
 
 .r {
   background-color: red;
@@ -80,7 +91,7 @@ select {
 ol {
   list-style-type: none;
   float: left;
-  padding: 0px;
+  padding-left: 0px;
   margin-left: 0px;
 }
 
