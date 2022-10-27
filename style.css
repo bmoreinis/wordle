@@ -16,7 +16,7 @@ button:hover {
 
 #main {
   width: 625px;
-  height: 200px;
+  height: 125px;
   margin: auto;
   padding: 25px;
   border-radius: 25px;
@@ -27,19 +27,21 @@ button:hover {
   width: 625px;
   height: 37.5px;
   margin: auto;
-  border: 1px solid yellow;
+  /*border: 1px solid yellow;*/
   text-align: center;
 }
 
 #titleHeader2 {
-  width: 400px;
-  border: 1px solid red;
+  width: 225px;
+  /*border: 1px solid red;*/
   text-align: center;
+  margin: auto;
 }
 
 
 #title {
-  width: 200px;
+  display: inline;
+  width: 169px;
   margin-block: 0px;
   margin: 0px;
   color: #e6ffff;
