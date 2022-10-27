@@ -12,8 +12,14 @@
   <!--<button onclick="createAnswer()">Play</button>!-->
   <script src="script.js"></script>
   <div id="main">
-    <h1 id="title"> Mastermind</h1>
-    <button id="instructions" onclick="instructions()">Instructions</button>
+    <div id="titleHeader1">
+      <div id="titleHeader2">
+        <h1 id="title"> Mastermind</h1>
+      <button id="instructions" onclick="instructions()">
+      <img src="https://upload.wikimedia.org/wikipedia/en/5/5a/Black_question_mark.png" alt="Help" width="15px" height="15px">
+      </button>
+      </div>
+    </div>
     <div onchange="selectColor()" id="selectors">
       <select name="guess1" id="guess1" class="r">
         <option value="0">R</option>

@@ -23,19 +23,35 @@ button:hover {
   background-color: #303030;
 }
 
-#title {
+#titleHeader1 {
   width: 625px;
+  height: 37.5px;
+  margin: auto;
+  border: 1px solid yellow;
   text-align: center;
-  height: auto;
+}
+
+#titleHeader2 {
+  width: 400px;
+  border: 1px solid red;
+  text-align: center;
+}
+
+
+#title {
+  width: 200px;
+  margin-block: 0px;
+  margin: 0px;
   color: #e6ffff;
 }
 
 #instructions {
+  float: right;
+  margin-left: 25px;
   height: 37.5px;
 }
 
 button {
-  width: 625px;
   height: 75px;
   border-radius: 25px;
   background-color: #e6ffff;
