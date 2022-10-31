@@ -2,6 +2,9 @@ var colors = ["r", "o", "y", "g", "c", "v"];
 var answer = [];
 var guessRecord = [];
 var turnCount = 0;
+var score = [];
+var winFlag = 0;
+
 
 /* ENTERINPUT
  * By Kevin @105372kl 
@@ -14,27 +17,50 @@ var turnCount = 0;
  */
 // Enter Button:
 function enterInput() {
-  turnCount++;
-  console.log("Turn count: " + turnCount);
-  let guessArray = guessInput(); // calls function and receives guess array @mbm
-  let guessClone = guessArray.slice(); // moved from guessInput @mbm
-  console.log(JSON.stringify(guessClone)); //why does alert work, but log returns a null value?
-  let feedback = giveFeedback(guessClone); // calls function and receives array @mbm
-  // feedback.push("Turns: "+turnCount); @removed per refactoring
-  if (feedback[3] == "b") {
-    alert("You Won in " + turnCount + " turns!");
+  if (winFlag == 1) {
     clear();
+    winFlag = 0;
+    let turnButton = document.getElementById("play");
+  turnButton.innerHTML = "Play Turn";
   }
-  //else alert("Guess: " + (JSON.stringify(guessArray)) + "Feedback: " + (JSON.stringify(feedback))); -obsolete @kl
-  //makeGuessRecord(guessArray, feedback);
-  let colorGuess = makeGuessRecord(guessArray, feedback);
-  displayGuessRecord(colorGuess, feedback);
+  else {
+    turnCount++;
+    console.log("Turn count: " + turnCount);
+    let guessArray = guessInput(); // calls function and receives guess array @mbm
+    let guessClone = guessArray.slice(); // moved from guessInput @mbm
+    console.log(JSON.stringify(guessClone)); //why does alert work, but log returns a null value?
+    let feedback = giveFeedback(guessClone); // calls function and receives array @mbm
+    // feedback.push("Turns: "+turnCount); @removed per refactoring
+    if (feedback[3] == "b") {
+      win();
+    }
+    let colorGuess = makeGuessRecord(guessArray, feedback);
+    displayGuessRecord(colorGuess, feedback);
+  }
+}
+
+function win() {
+  alert("You Won in " + turnCount + " turns!");
+  score.push(turnCount);
+  let scoreTotal = 0;
+  for (let i = 0; i < score.length; i++) {
+    scoreTotal += score[i];
+  }
+  let avgScore = scoreTotal / score.length;
+  let scoreDisplay = document.getElementById("score");
+  scoreDisplay.innerHTML = "Average Score: <br>" + avgScore;
+  let turnButton = document.getElementById("play");
+  turnButton.innerHTML = "Play Again";
+  winFlag = 1;
 }
 
 function clear() {
-  guessRecord = [];
   turnCount = 0;
   createAnswer();
+  guessRecord = [];
+  let feedback = document.getElementById("feedbackOL");
+  feedback.innerHTML = "";
+  //console.log("clear");
 }
 
 function makeGuessRecord(guessArray, feedback) {
@@ -44,7 +70,7 @@ function makeGuessRecord(guessArray, feedback) {
   guessTranscript.push(colorGuess);
   guessTranscript.push(feedback);
   guessRecord.push(guessTranscript);
-  console.log("Guess Record: "+JSON.stringify(guessRecord));
+  console.log("Guess Record: " + JSON.stringify(guessRecord));
   return colorGuess;
 }
 
@@ -59,7 +85,7 @@ function convertGuess(guessArray) {
     }
   }
   return colorGuess;                               <--                          old code @kl */
-  let colorGuess  = [];
+  let colorGuess = [];
   for (let i = 0; i < 4; i++) {
     colorGuess.push(colors[guessArray[i]]);
   }
@@ -77,12 +103,12 @@ function displayGuessRecord(colorGuess, feedback) {
     let turnGuessColor = document.createElement("li");
     turnGuessColor.classList.add(colorGuess[i]);
     turnGuess.appendChild(turnGuessColor);
-  }  
+  }
   for (let i = 0; i < feedback.length; i++) {
     let turnFeedbackColor = document.createElement("li");
     turnFeedbackColor.classList.add(feedback[i]);
     turnFeedback.appendChild(turnFeedbackColor);
-  }  
+  }
   turnMain.appendChild(turnGuess);
   turnMain.appendChild(turnFeedback);
   document.getElementById("feedbackOL").appendChild(turnMain);
@@ -104,6 +130,7 @@ function createAnswer() {
   //answer = [0,0,0,0]
   console.log("Answer: " + answer);
 }
+
 createAnswer()
 
 //Extracts values from User input in dropdown menus
@@ -176,15 +203,15 @@ function selectColor() {
     guessArray.push(parseInt(input.value));
   }
   //console.log(guessArray);
-  let colorGuess  = [];
+  let colorGuess = [];
   for (let i = 0; i < 4; i++) {
     colorGuess.push(colors[guessArray[i]]);
   }
   //console.log(colorGuess);
   let guessI = 1;
   for (let i = 0; i < 4; i++) {
-    document.getElementById("guess"+guessI).setAttribute("class", "");
-    document.getElementById("guess"+guessI).classList.add(colorGuess[i]);
+    document.getElementById("guess" + guessI).setAttribute("class", "");
+    document.getElementById("guess" + guessI).classList.add(colorGuess[i]);
     //console.log(colorGuess[i])
     guessI++;
   }
