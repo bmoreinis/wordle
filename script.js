@@ -115,7 +115,7 @@ function displayGuessRecord(colorGuess, feedback) {
 }
 
 function instructions() {
-  alert("Solve for a secret four-color password \n\nHints will be displayed on the right: \n\n     Black Tokens indicate that one color exists in the correct position in the password. \n\n     White Tokens indicate that one color exists, but is in the wrong position in the password.");
+  alert("Solve for a secret four-color password! \n\nHints will be displayed on the right: \n\n     Black Tokens indicate that one color exists in \n     the correct position in the password. \n\n     White Tokens indicate that one color exists, but is in the wrong \n     position in the password.");
 }
 
 //Play Button:
