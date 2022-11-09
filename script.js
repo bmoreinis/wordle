@@ -4,7 +4,9 @@ var guessRecord = [];
 var turnCount = 0;
 var score = [];
 var winFlag = 0;
+var guessArray = [];
 
+//https://press.rebus.community/programmingfundamentals/chapter/loading-an-array-from-a-text-file/
 
 /* ENTERINPUT
  * By Kevin @105372kl 
@@ -17,26 +19,23 @@ var winFlag = 0;
  */
 // Enter Button:
 function enterInput() {
-  if (winFlag == 1) {
+
+  /*if (winFlag == 1) {
     clear();
     winFlag = 0;
     let turnButton = document.getElementById("play");
   turnButton.innerHTML = "Play Turn";
+  } */
+  turnCount++;
+  console.log("Turn count: " + turnCount);
+  let guessClone = guessArray.slice(); // moved from guessInput @mbm
+  console.log(JSON.stringify(guessClone)); //why does alert work, but log returns a null value?
+  let feedback = giveFeedback(guessClone); // calls function and receives array @mbm
+  // feedback.push("Turns: "+turnCount); @removed per refactoring
+  if (feedback[4] == "b") {
+    win();
   }
-  else {
-    turnCount++;
-    console.log("Turn count: " + turnCount);
-    let guessArray = guessInput(); // calls function and receives guess array @mbm
-    let guessClone = guessArray.slice(); // moved from guessInput @mbm
-    console.log(JSON.stringify(guessClone)); //why does alert work, but log returns a null value?
-    let feedback = giveFeedback(guessClone); // calls function and receives array @mbm
-    // feedback.push("Turns: "+turnCount); @removed per refactoring
-    if (feedback[3] == "b") {
-      win();
-    }
-    let colorGuess = makeGuessRecord(guessArray, feedback);
-    displayGuessRecord(colorGuess, feedback);
-  }
+  displayGuessRecord(feedback);
 }
 
 function win() {
@@ -48,7 +47,6 @@ function win() {
   }
   let avgScore = scoreTotal / score.length;
   let scoreDisplay = document.getElementById("score");
-  scoreDisplay.innerHTML = "Average Score: <br>" + avgScore;
   let turnButton = document.getElementById("play");
   turnButton.innerHTML = "Play Again";
   winFlag = 1;
@@ -74,43 +72,24 @@ function makeGuessRecord(guessArray, feedback) {
   return colorGuess;
 }
 
-function convertGuess(guessArray) {
-  /*let colorGuess  = guessArray.slice();
-  for (let i = 0; i < colorGuess.length; i++) {
-    for (let guessPos = 0; guessPos <= colors.length; guessPos++ ) {
-      colorGuess[i] = colors.indexOf(guessArray[i]);
-      if (colorGuess[i] == guessPos) {
-        colorGuess[i] = colors[guessPos];
-      }
-    }
-  }
-  return colorGuess;                               <--                          old code @kl */
-  let colorGuess = [];
-  for (let i = 0; i < 4; i++) {
-    colorGuess.push(colors[guessArray[i]]);
-  }
-  return colorGuess;
-}
+
 //ol -> li for each turn -> ul for guess array + ul for feedback; ul guessArray -> li for each color; ul feedback -> li for each token 
-function displayGuessRecord(colorGuess, feedback) {
+function displayGuessRecord(feedback) {
   let turnMain = document.createElement("li");
   turnMain.style.width = "625px";
   let turnGuess = document.createElement("ul");
-  let turnFeedback = document.createElement("ul");
-  turnFeedback.style.float = "right";
-  turnFeedback.style.marginLeft = "25px";
-  for (let i = 0; i < 4; i++) {
-    let turnGuessColor = document.createElement("li");
-    turnGuessColor.classList.add(colorGuess[i]);
-    turnGuess.appendChild(turnGuessColor);
+  for (let i = 0; i <= 4; i++) {
+    let turnGuessLetter = document.createElement("div");
+    turnGuessLetter.innerHTML = guessArray[i].toUpperCase();
+    turnGuessLetter.classList.add("guess");
+    turnGuessLetter.classList.add(feedback[i]);
+    turnGuess.appendChild(turnGuessLetter);
   }
-  for (let i = 0; i < feedback.length; i++) {
-    let turnFeedbackColor = document.createElement("li");
+  /*for (let i = 0; i < feedback.length; i++) {
     turnFeedbackColor.classList.add(feedback[i]);
     turnFeedback.appendChild(turnFeedbackColor);
-  }
+  }*/
   turnMain.appendChild(turnGuess);
-  turnMain.appendChild(turnFeedback);
   document.getElementById("feedbackOL").appendChild(turnMain);
 }
 
@@ -123,9 +102,13 @@ function instructions() {
 function createAnswer() {
   turnCount = 0;
   answer = [];
+  let answerSelect = answersCollection[Math.floor(Math.random() * answersCollection.length)];
+  answerSelect = "bonus";
+  //console.log(answerSelect);
+  //console.log(answerSelect.length);
   guessRecord = [];
-  for (let i = 0; i <= 3; i++) {
-    answer[i] = Math.floor(Math.random() * 6);
+  for (let i = 0; i <= answerSelect.length; i++) {
+    answer.push(answerSelect[i]);
   }
   //answer = [0,0,0,0]
   console.log("Answer: " + answer);
@@ -133,32 +116,71 @@ function createAnswer() {
 
 createAnswer()
 
+
 //Extracts values from User input in dropdown menus
-function guessInput() {
-  let guessArray = [];
-  for (let i = 1; i <= 4; i++) {
-    let input = document.getElementById("guess" + i);
-    guessArray.push(parseInt(input.value));
+
+function guessInput(event) {
+  let keyPress = event.key;
+  if (keyPress == "Backspace") {
+    for (let i = 5; i => 1; i--) {
+      let key = document.getElementById("guess" + i);
+      if (key.innerHTML != "") {
+        guessArray.splice(-1)
+        let displayKey = document.getElementById("guess" + i);
+        displayKey.innerHTML = "";
+        break;
+      }
+    }
   }
-  // guessTranscript = guessArray.slice();
-  return guessArray; // added to track passed values between functions @mbm
+  else if (keyPress == "Enter") {
+    if (guessArray.length != 5) {
+      alert("Not Enough Letters!");
+    }
+    else {
+      let word = guessArray.join("");
+      if (dictionary.indexOf(word) == -1 && answersCollection.indexOf(word) ==-1) {
+        alert("Not a word!");
+        console.log("Guess: " + word);
+      }
+      else {
+        enterInput();  
+      }
+    }
+  }
+  else if (keyPress.length == 1) {
+    for (let i = 1; i <= 5; i++) {
+      let key = document.getElementById("guess" + i);
+      if (key.innerHTML == "") {
+        guessArray.push(keyPress);
+        let displayKey = document.getElementById("guess" + i);
+        displayKey.innerHTML = keyPress.toUpperCase();
+        //displayKey.classList.add("")
+        break;
+      }
+    }
+  }
+  //console.log(guessArray);
 }
 
 function giveFeedback(guessClone) {
   // refactoring with parameters to track versions of arrays
   let tempTranscript = blackCheck(guessClone);
   let feedback = whiteCheck(tempTranscript);
-  console.log("feedback: " + feedback);
+  console.log("Feedback"+JSON.stringify(feedback));
   return feedback;
 }
 
 //Checks if the indices of both the current selection in the guessArray and answerClone are equal
 function blackCheck(guessClone) {
-  let feedback = [];
+  let feedback = guessArray.slice();
+  for (let i = 0; i <=4; i++) {
+    feedback[i] = Array.from(feedback[i]);
+  }
+  //console.log(JSON.stringify(feedback));
   let answerClone = answer.slice();
-  for (let i = 0; i <= 3; i++) {
+  for (let i = 0; i <= 4; i++) {
     if (guessClone[i] == answerClone[i]) {
-      feedback.push("b");
+      feedback[i].push("b");
       answerClone[i] = null;
       guessClone[i] = null;
     }
@@ -175,14 +197,14 @@ function whiteCheck(tempTranscript) {
   let answerClone = tempTranscript[0].slice();
   let guessArray = tempTranscript[1].slice();
   let feedback = tempTranscript[2].slice();
-  for (let i = 0; i <= 3; i++) {
+  for (let i = 0; i <= 4; i++) {
     if (guessArray[i] != null) {
-      for (let guessPos = 0; guessPos <= 3; guessPos++) {
+      for (let guessPos = 0; guessPos <= 4; guessPos++) {
         if (guessArray[guessPos] != null)
-          for (let answerPos = 0; answerPos <= 3; answerPos++) {
+          for (let answerPos = 0; answerPos <= 4; answerPos++) {
             if (guessArray[guessPos] == answerClone[answerPos]) {
               if (guessPos != answerPos) {
-                feedback.push("w");
+                feedback[i].push("w");
                 guessArray[guessPos] = null;
                 answerClone[answerPos] = null;
                 break;

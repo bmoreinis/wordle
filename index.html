@@ -4,62 +4,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>Mastermind</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body onkeydown="guessInput(event)">
   <!--<button onclick="createAnswer()">Play</button>!-->
+  <script src="answers.js"></script>
   <script src="script.js"></script>
   <div id="main">
     <div id="titleHeader1">
       <div id="titleHeader2">
-        <h1 id="title"> Mastermind</h1>
-      <button id="instructions" onclick="instructions()">
-      <img src="https://upload.wikimedia.org/wikipedia/en/5/5a/Black_question_mark.png" alt="Help" width="15px" height="15px">
-      </button>
+        <h1 id="title"> Wordle</h1>
+        <button id="instructions" onclick="instructions()">
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/5a/Black_question_mark.png" alt="Help" width="15px"
+            height="15px">
+        </button>
       </div>
     </div>
-    <div onchange="selectColor()" id="selectors">
-      <select name="guess1" id="guess1" class="r">
-        <option value="0">R</option>
-        <option value="1">O</option>
-        <option value="2">Y</option>
-        <option value="3">G</option>
-        <option value="4">C</option>
-        <option value="5">V</option>
-      </select>
-      <select name="guess2" id="guess2" class="r">
-        <option value="0">R</option>
-        <option value="1">O</option>
-        <option value="2">Y</option>
-        <option value="3">G</option>
-        <option value="4">C</option>
-        <option value="5">V</option>
-      </select>
-      <select name="guess3" id="guess3" class="r">
-        <option value="0">R</option>
-        <option value="1">O</option>
-        <option value="2">Y</option>
-        <option value="3">G</option>
-        <option value="4">C</option>
-        <option value="5">V</option>
-      </select>
-      <select name="guess4" id="guess4" class="r">
-        <option value="0">R</option>
-        <option value="1">O</option>
-        <option value="2">Y</option>
-        <option value="3">G</option>
-        <option value="4">C</option>
-        <option value="5">V</option>
-      </select>
-      <button onclick="enterInput()" id="play">Play Turn</button>
-      <button id="score"> Average Score: <br> &nbsp</button>
-    </div>
-    <ol id="feedbackOL"></ol>
+    <div name="guess1" id="guess1" class="guess"></div>
+    <div name="guess2" id="guess2" class="guess"></div>
+    <div name="guess3" id="guess3" class="guess"></div>
+    <div name="guess4" id="guess4" class="guess"></div>
+    <div name="guess5" id="guess5" class="guess"></div>
+    <button onclick="enterInput()" id="play">Play Turn</button>
+      <ol id="feedbackOL"></ol>
   </div>
 
-  
+
 </body>
 
 </html>
