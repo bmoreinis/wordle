@@ -82,7 +82,7 @@ function displayGuessRecord(feedback) {
     let turnGuessLetter = document.createElement("div");
     turnGuessLetter.innerHTML = guessArray[i].toUpperCase();
     turnGuessLetter.classList.add("guess");
-    turnGuessLetter.classList.add(feedback[i]);
+    turnGuessLetter.classList.add(feedback[i][1]);
     turnGuess.appendChild(turnGuessLetter);
   }
   /*for (let i = 0; i < feedback.length; i++) {
@@ -204,10 +204,10 @@ function whiteCheck(tempTranscript) {
           for (let answerPos = 0; answerPos <= 4; answerPos++) {
             if (guessArray[guessPos] == answerClone[answerPos]) {
               if (guessPos != answerPos) {
-                feedback[i].push("w");
+                feedback[guessPos].push("w");
                 guessArray[guessPos] = null;
                 answerClone[answerPos] = null;
-                break;
+                break ;
               }
             } //match
           }
@@ -215,26 +215,4 @@ function whiteCheck(tempTranscript) {
     }//checks if guess array current index is a null value (from black token check)
   }//iterate through each position of guessArray
   return feedback; // we don't need answerClone anymore @mbm
-}
-
-function selectColor() {
-  //console.log("hi");
-  let guessArray = [];
-  for (let i = 1; i <= 4; i++) {
-    let input = document.getElementById("guess" + i);
-    guessArray.push(parseInt(input.value));
-  }
-  //console.log(guessArray);
-  let colorGuess = [];
-  for (let i = 0; i < 4; i++) {
-    colorGuess.push(colors[guessArray[i]]);
-  }
-  //console.log(colorGuess);
-  let guessI = 1;
-  for (let i = 0; i < 4; i++) {
-    document.getElementById("guess" + guessI).setAttribute("class", "");
-    document.getElementById("guess" + guessI).classList.add(colorGuess[i]);
-    //console.log(colorGuess[i])
-    guessI++;
-  }
 }
