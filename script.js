@@ -1,9 +1,7 @@
-var colors = ["r", "o", "y", "g", "c", "v"];
 var answer = [];
 var guessRecord = [];
 var turnCount = 0;
-var score = [];
-var winFlag = 0;
+var winFlag = false;
 var guessArray = [];
 
 //https://press.rebus.community/programmingfundamentals/chapter/loading-an-array-from-a-text-file/
@@ -20,40 +18,39 @@ var guessArray = [];
 // Enter Button:
 function enterInput() {
 
-  /*if (winFlag == 1) {
+  if (winFlag == true) {
     clear();
-    winFlag = 0;
+    turnCount = 0;
+    winFlag = false;
     let turnButton = document.getElementById("play");
-  turnButton.innerHTML = "Play Turn";
-  } */
-  turnCount++;
+    turnButton.innerHTML = "Play Turn";
+  }
+  else {
+    turnCount++;
+  }
+  
   console.log("Turn count: " + turnCount);
   let guessClone = guessArray.slice(); // moved from guessInput @mbm
   console.log(JSON.stringify(guessClone)); //why does alert work, but log returns a null value?
   let feedback = giveFeedback(guessClone); // calls function and receives array @mbm
   // feedback.push("Turns: "+turnCount); @removed per refactoring
-  if (feedback[4] == "b") {
-    win();
+  let winCounter = 0;
+  for (let i = 0; i <= 4; i++) {
+    if (feedback[i][1] == "b") {winCounter++;}
   }
+  if (winCounter == 5) {win();}
   displayGuessRecord(feedback);
 }
 
 function win() {
   alert("You Won in " + turnCount + " turns!");
-  score.push(turnCount);
-  let scoreTotal = 0;
-  for (let i = 0; i < score.length; i++) {
-    scoreTotal += score[i];
-  }
-  let avgScore = scoreTotal / score.length;
-  let scoreDisplay = document.getElementById("score");
+  turnCount = 0;
   let turnButton = document.getElementById("play");
   turnButton.innerHTML = "Play Again";
-  winFlag = 1;
+  winFlag = true;
 }
 
 function clear() {
-  turnCount = 0;
   createAnswer();
   guessRecord = [];
   let feedback = document.getElementById("feedbackOL");
@@ -125,7 +122,7 @@ function guessInput(event) {
     for (let i = 5; i => 1; i--) {
       let key = document.getElementById("guess" + i);
       if (key.innerHTML != "") {
-        guessArray.splice(-1)
+        guessArray.splice(-1);
         let displayKey = document.getElementById("guess" + i);
         displayKey.innerHTML = "";
         break;
@@ -133,7 +130,10 @@ function guessInput(event) {
     }
   }
   else if (keyPress == "Enter") {
-    if (guessArray.length != 5) {
+    if (winFlag == true) {
+      enterInput();
+    }
+    else if (guessArray.length != 5) {
       alert("Not Enough Letters!");
     }
     else {
@@ -144,22 +144,30 @@ function guessInput(event) {
       }
       else {
         enterInput();  
+        for (let i = 1; i <= 5; i++) {
+          let displayKey = document.getElementById("guess" + i);
+          displayKey.innerHTML = "";
+        }
+        guessArray = [];
+        //guessArray.splice(-1);
       }
     }
   }
-  else if (keyPress.length == 1) {
-    for (let i = 1; i <= 5; i++) {
-      let key = document.getElementById("guess" + i);
-      if (key.innerHTML == "") {
-        guessArray.push(keyPress);
-        let displayKey = document.getElementById("guess" + i);
-        displayKey.innerHTML = keyPress.toUpperCase();
-        //displayKey.classList.add("")
-        break;
+  if (winFlag == false) {
+    if (keyPress.length == 1) {
+      for (let i = 1; i <= 5; i++) {
+        let key = document.getElementById("guess" + i);
+        if (key.innerHTML == "") {
+          guessArray.push(keyPress);
+          let displayKey = document.getElementById("guess" + i);
+          displayKey.innerHTML = keyPress.toUpperCase();
+          //displayKey.classList.add("")
+          break;
+        }
       }
     }
-  }
   //console.log(guessArray);
+  }
 }
 
 function giveFeedback(guessClone) {
