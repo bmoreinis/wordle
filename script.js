@@ -28,7 +28,7 @@ function enterInput() {
   else {
     turnCount++;
   }
-  
+
   console.log("Turn count: " + turnCount);
   let guessClone = guessArray.slice(); // moved from guessInput @mbm
   console.log(JSON.stringify(guessClone)); //why does alert work, but log returns a null value?
@@ -36,9 +36,9 @@ function enterInput() {
   // feedback.push("Turns: "+turnCount); @removed per refactoring
   let winCounter = 0;
   for (let i = 0; i <= 4; i++) {
-    if (feedback[i][1] == "b") {winCounter++;}
+    if (feedback[i][1] == "b") { winCounter++; }
   }
-  if (winCounter == 5) {win();}
+  if (winCounter == 5) { win(); }
   displayGuessRecord(feedback);
 }
 
@@ -91,7 +91,7 @@ function displayGuessRecord(feedback) {
 }
 
 function instructions() {
-  alert("Solve for a secret four-color password! \n\nHints will be displayed on the right: \n\n     Black Tokens indicate that one color exists in \n     the correct position in the password. \n\n     White Tokens indicate that one color exists, but is in the wrong \n     position in the password.");
+  alert("Solve for a secret five-letter password! \n\nHints will be displayed as colors: \n\n     Blue indicates that one letter exists in \n     the correct position in the password. \n\n     Light Blue indicates that one letter exists, but is in the wrong \n     position in the password.");
 }
 
 //Play Button:
@@ -100,7 +100,7 @@ function createAnswer() {
   turnCount = 0;
   answer = [];
   let answerSelect = answersCollection[Math.floor(Math.random() * answersCollection.length)];
-  answerSelect = "bonus";
+  //answerSelect = "bonus";
   //console.log(answerSelect);
   //console.log(answerSelect.length);
   guessRecord = [];
@@ -123,65 +123,83 @@ function guessInput(event) {
       let key = document.getElementById("guess" + i);
       if (key.innerHTML != "") {
         guessArray.splice(-1);
-        let displayKey = document.getElementById("guess" + i);
-        displayKey.innerHTML = "";
+        key.innerHTML = "";
+        key.classList.remove("selected");
+        let preKey = document.getElementById("guess" + (i-1));
+        preKey.classList.add("selected");
         break;
       }
     }
   }
   else if (keyPress == "Enter") {
-    if (winFlag == true) {
-      enterInput();
-    }
-    else if (guessArray.length != 5) {
-      alert("Not Enough Letters!");
-    }
-    else {
-      let word = guessArray.join("");
-      if (dictionary.indexOf(word) == -1 && answersCollection.indexOf(word) ==-1) {
-        alert("Not a word!");
-        console.log("Guess: " + word);
-      }
-      else {
-        enterInput();  
-        for (let i = 1; i <= 5; i++) {
-          let displayKey = document.getElementById("guess" + i);
-          displayKey.innerHTML = "";
-        }
-        guessArray = [];
-        //guessArray.splice(-1);
-      }
-    }
+    enter()
   }
   if (winFlag == false) {
     if (keyPress.length == 1) {
       for (let i = 1; i <= 5; i++) {
+      if (guessArray.length == 0) {
+        let key = document.getElementById("guess" + i)
+        key.classList.add("selected");
+      }
         let key = document.getElementById("guess" + i);
         if (key.innerHTML == "") {
           guessArray.push(keyPress);
-          let displayKey = document.getElementById("guess" + i);
-          displayKey.innerHTML = keyPress.toUpperCase();
-          //displayKey.classList.add("")
+          key.innerHTML = keyPress.toUpperCase();
+          key.classList.add("selected");
+          let preKey = document.getElementById("guess" + (i-1));
+          preKey.classList.remove("selected");
           break;
         }
       }
     }
-  //console.log(guessArray);
+    //console.log(guessArray);
   }
+}
+
+function enter() {
+  if (winFlag == true) {
+    enterInput();
+  }
+  else if (guessArray.length != 5) {
+    alert("Not Enough Letters!");
+  }
+  else {
+    let word = guessArray.join("");
+    if (dictionary.indexOf(word) == -1 && answersCollection.indexOf(word) == -1) {
+      alert("Not a word!");
+      console.log("Guess: " + word);
+    }
+    else {
+      enterInput();
+      for (let i = 1; i <= 5; i++) {
+        let displayKey = document.getElementById("guess" + i);
+        displayKey.innerHTML = "";
+        displayKey.classList.remove("selected");
+      }
+      guessArray = [];
+      //guessArray.splice(-1);
+    }
+  }
+}
+
+function click(value) {
+  alert(value);
+  let key = document.getElementById("guess" + i)
+  key.classList.add("selected");
 }
 
 function giveFeedback(guessClone) {
   // refactoring with parameters to track versions of arrays
   let tempTranscript = blackCheck(guessClone);
   let feedback = whiteCheck(tempTranscript);
-  console.log("Feedback"+JSON.stringify(feedback));
+  console.log("Feedback" + JSON.stringify(feedback));
   return feedback;
 }
 
 //Checks if the indices of both the current selection in the guessArray and answerClone are equal
 function blackCheck(guessClone) {
   let feedback = guessArray.slice();
-  for (let i = 0; i <=4; i++) {
+  for (let i = 0; i <= 4; i++) {
     feedback[i] = Array.from(feedback[i]);
   }
   //console.log(JSON.stringify(feedback));
@@ -215,7 +233,7 @@ function whiteCheck(tempTranscript) {
                 feedback[guessPos].push("w");
                 guessArray[guessPos] = null;
                 answerClone[answerPos] = null;
-                break ;
+                break;
               }
             } //match
           }

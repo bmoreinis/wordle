@@ -73,6 +73,14 @@ button {
   font-size: 65px;
 }
 
+.selected {
+  background-color: #aee6e6;
+}
+
+.guess:hover {
+  background-color: #abc2c2;
+}
+
 /* I should probably put the text into a generated div, then center said div into the boxes, that way I can change the font later*/
 
 #selectors {
@@ -95,10 +103,10 @@ button {
 }
 
 .b {
-  background-color: #303030;
+  background-color: #00b7eb;
 }
 .w {
-  background-color: white;
+  background-color: #7df9ff  ;
 }
 
 ol {
