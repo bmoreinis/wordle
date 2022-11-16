@@ -4,7 +4,6 @@ var turnCount = 0;
 var winFlag = false;
 var guessArray = [];
 
-
 //https://press.rebus.community/programmingfundamentals/chapter/loading-an-array-from-a-text-file/
 
 /* ENTERINPUT
@@ -16,53 +15,6 @@ var guessArray = [];
  * @error: none 
  * Sample documentation @mbm
  */
-
-/*
- * https://www.w3schools.com/howto/howto_js_active_element.asp
-var wordGuess = document.getElementById("wordGuess");
-var btns = wordGuess.getElementsByClassName("guess");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("active");
-    // If there's no active class
-    if (current.length > 0) {
-      // Remove active class from another clicked button
-      current[0].className = current[0].className.replace(" active", "");
-    }
-    // Add the active class to the current/clicked button
-    // In an event, "this" refers to the element that received the event.
-    this.className += " active";
-  });
-}
-*/
-var wordGuess = document.getElementById("wordGuess");
-var btns = wordGuess.getElementsByClassName("guess");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("active");
-    if (current.length > 0) {
-      current[0].className = current[0].className.replace(" active", "");
-    }
-    this.className += " active";
-  });
-}
-/* Get value on mouseout: 
- * https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseout_event
- */
-
-test.addEventListener("mouseout", (event) => {
-  // highlight the mouseout target
-  event.target.style.color = "orange";
-
-  // reset the color after a short delay
-  setTimeout(() => {
-    event.target.style.color = "";
-  }, 500);
-}, false);
-/* https://isotropic.co/how-to-fix-cannot-read-property-style-of-null-in-javascript/
- * this is because the script references were ABOVE the HTML code.
- */
-
 // Enter Button:
 function enterInput() {
 
@@ -209,12 +161,12 @@ function enter() {
     enterInput();
   }
   else if (guessArray.length != 5) {
-    alert(guessArray.toString() + " Not Enough Letters!");
+    alert("Not Enough Letters!");
   }
   else {
     let word = guessArray.join("");
     if (dictionary.indexOf(word) == -1 && answersCollection.indexOf(word) == -1) {
-      alert(guessArray.toString() +" Not a word!");
+      alert("Not a word!");
       console.log("Guess: " + word);
     }
     else {
