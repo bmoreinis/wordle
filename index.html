@@ -4,12 +4,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Wordle</title>
+  <title>Mastermind</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body onkeydown="guessInput(event)">
   <!--<button onclick="createAnswer()">Play</button>!-->
+  <script src="answers.js"></script>
+  <script src="script.js"></script>
   <div id="main">
     <div id="titleHeader1">
       <div id="titleHeader2">
@@ -20,21 +22,15 @@
         </button>
       </div>
     </div>
-    <div id="wordGuess">
-      <!-- replaced DIVs with INPUTs to support VALUE -->
-      <input name="guess1" id="guess1" class="guess" onclick="click('1')"></input>
-      <input name="guess2" id="guess2" class="guess" onclick="click(this)"></input>
-      <input name="guess3" id="guess3" class="guess" onclick="click(this)"></input>
-      <input name="guess4" id="guess4" class="guess" onclick="click(this)"></input>
-      <input name="guess5" id="guess5" class="guess" onclick="click(this)"></input>
-    </div>
+    <div name="guess1" id="guess1" value="1" class="guess" onclick="click('1')"></div>
+    <div name="guess2" id="guess2" class="guess" onclick="click(this)"></div>
+    <div name="guess3" id="guess3" class="guess" onclick="click(this)"></div>
+    <div name="guess4" id="guess4" class="guess" onclick="click(this)"></div>
+    <div name="guess5" id="guess5" class="guess" onclick="click(this)"></div>
     <button onclick="enter()" id="play">Play Turn</button>
       <ol id="feedbackOL"></ol>
   </div>
 
-
-  <script src="answers.js"></script>
-  <script src="script.js"></script>
 
 </body>
 
