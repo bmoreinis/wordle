@@ -15,7 +15,7 @@ button:hover {
 }
 
 #main {
-  width: 625px;
+  width: 490px;
   margin: auto;
   padding: 25px;
   border-radius: 25px;
@@ -24,7 +24,7 @@ button:hover {
 }
 
 #titleHeader1 {
-  width: 625px;
+  width: 525px;
   height: 37.5px;
   margin: auto;
   /*border: 1px solid yellow;*/

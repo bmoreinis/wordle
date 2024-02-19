@@ -4,6 +4,7 @@ var turnCount = 0;
 var winFlag = false;
 var guessArray = [];
 
+createAnswer();
 //https://press.rebus.community/programmingfundamentals/chapter/loading-an-array-from-a-text-file/
 
 /* ENTERINPUT
@@ -15,7 +16,7 @@ var guessArray = [];
  * @error: none 
  * Sample documentation @mbm
  */
-// Enter Button:
+
 function enterInput() {
 
   if (winFlag == true) {
@@ -27,13 +28,16 @@ function enterInput() {
   }
   else {
     turnCount++;
+    if (turnCount == 6) {
+      let board = document.getElementById("main");
+      board.style.backgroundColor = "red";
+    }
   }
 
   console.log("Turn count: " + turnCount);
-  let guessClone = guessArray.slice(); // moved from guessInput @mbm
-  console.log(JSON.stringify(guessClone)); //why does alert work, but log returns a null value?
-  let feedback = giveFeedback(guessClone); // calls function and receives array @mbm
-  // feedback.push("Turns: "+turnCount); @removed per refactoring
+  let guessClone = guessArray.slice();
+  console.log(JSON.stringify(guessClone));
+  let feedback = giveFeedback(guessClone);
   let winCounter = 0;
   for (let i = 0; i <= 4; i++) {
     if (feedback[i][1] == "b") { winCounter++; }
@@ -43,7 +47,8 @@ function enterInput() {
 }
 
 function win() {
-  alert("You Won in " + turnCount + " turns!");
+  let board = document.getElementById("main");
+  board.style.backgroundColor = "green";
   turnCount = 0;
   let turnButton = document.getElementById("play");
   turnButton.innerHTML = "Play Again";
@@ -52,6 +57,8 @@ function win() {
 
 function clear() {
   createAnswer();
+  let board = document.getElementById("main");
+  board.style.backgroundColor = "#303030";
   guessRecord = [];
   let feedback = document.getElementById("feedbackOL");
   feedback.innerHTML = "";
@@ -82,10 +89,6 @@ function displayGuessRecord(feedback) {
     turnGuessLetter.classList.add(feedback[i][1]);
     turnGuess.appendChild(turnGuessLetter);
   }
-  /*for (let i = 0; i < feedback.length; i++) {
-    turnFeedbackColor.classList.add(feedback[i]);
-    turnFeedback.appendChild(turnFeedbackColor);
-  }*/
   turnMain.appendChild(turnGuess);
   document.getElementById("feedbackOL").appendChild(turnMain);
 }
@@ -94,27 +97,17 @@ function instructions() {
   alert("Solve for a secret five-letter password! \n\nHints will be displayed as colors: \n\n     Blue indicates that one letter exists in \n     the correct position in the password. \n\n     Light Blue indicates that one letter exists, but is in the wrong \n     position in the password.");
 }
 
-//Play Button:
-
 function createAnswer() {
+  guessArray=[];
   turnCount = 0;
   answer = [];
   let answerSelect = answersCollection[Math.floor(Math.random() * answersCollection.length)];
-  //answerSelect = "bonus";
-  //console.log(answerSelect);
-  //console.log(answerSelect.length);
   guessRecord = [];
   for (let i = 0; i <= answerSelect.length; i++) {
     answer.push(answerSelect[i]);
   }
-  //answer = [0,0,0,0]
   console.log("Answer: " + answer);
 }
-
-createAnswer()
-
-
-//Extracts values from User input in dropdown menus
 
 function guessInput(event) {
   let keyPress = event.key;
